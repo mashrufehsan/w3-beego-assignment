@@ -1,0 +1,152 @@
+.dropdown {
+    margin: 10px 0;
+    display: flex;
+    justify-content: center;
+    
+}
+
+.dropdown-container {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    width: 90%;
+}
+
+.clear-dropdown {
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    cursor: pointer;
+    font-size: 22px;
+    display: none; /* Hidden by default */
+}
+
+.dropdown-list {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    width: 100%;
+    max-height: 200px;
+    overflow-y: auto;
+    border: 1px solid #ddd;
+    background-color: #fff;
+    z-index: 1000;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: none; /* Hidden by default */
+}
+
+.dropdown-list li {
+    padding: 10px;
+    cursor: pointer;
+}
+
+.dropdown-list li:hover {
+    background-color: #f0f0f0;
+}
+
+.carousel {
+    position: relative;
+    width: 100%;
+    max-width: 600px;
+    height: 400px;
+    margin: auto;
+    overflow: hidden;
+    /* border: 1px solid #ddd; */
+    /* background-color: #fff; */
+}
+
+.carousel-images {
+    display: flex;
+    transition: transform 0.5s ease;
+    height: 100%;
+}
+
+.carousel-images img {
+    min-width: 100%;
+    height: 100%;
+    object-fit: contain;
+    object-position: center;
+}
+
+.carousel-controls {
+    position: absolute;
+    top: 50%;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    transform: translateY(-50%);
+}
+
+.carousel-button {
+    background-color: rgba(0, 0, 0, 0.5);
+    color: white;
+    border: none;
+    padding: 10px;
+    cursor: pointer;
+}
+
+.carousel-counter {
+    position: absolute;
+    bottom: 10px;
+    right: 10px;
+    color: white;
+    font-size: 18px;
+    padding: 5px 10px;
+    background-color: rgba(0, 0, 0, 0.5);
+    border-radius: 5px;
+}
+
+.breed-details {
+    margin: 30px
+}
+
+.breed-details > p {
+    margin-bottom: 20px;
+}
+
+.breed-details h3,
+.breed-details h4,
+.breed-details p {
+    margin: 0;
+}
+
+.breed-details > div,
+.breed-details > p {
+    margin-bottom: 15px; /* Adjust the value as needed */
+}
+
+.breed-details .breed-title-container * {
+    margin-right: 7px; /* Adjust the value as needed */
+}
+
+
+
+.breed-title-container{
+    display: flex;
+    align-items: center;
+}
+
+.breed-details-color-gray{
+    color: rgb(95, 95, 95);
+}
+
+.breed-details-font-italic{
+    font-style: italic;
+}
+
+.breed-details-wiki{
+    color: rgb(255, 104, 34);
+    text-decoration: none;
+    font-weight: 600;
+}
+
+#breedInput {
+    width: 100%;
+    padding: 10px;
+    font-size: 16px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+}

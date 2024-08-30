@@ -1,0 +1,29 @@
+.myvotes-container {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr); /* Two equal-width columns */
+    gap: 20px;
+    margin: 30px 10px 20px 10px;
+}
+
+.vote-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 10px;
+    padding: 10px;
+    border-radius: 8px;
+    border: 1px solid rgb(236, 236, 236);
+    box-shadow: rgba(0, 0, 0, 0.12) 0px 1px 3px, rgba(0, 0, 0, 0.24) 0px 1px 2px;
+    background-color: rgb(241, 241, 241);
+}
+
+
+.vote-item img {
+    width: 100px;
+    height: auto;
+    border-radius: 8px;
+}
+
+.vote-status {
+    font-size: 24px;
+}

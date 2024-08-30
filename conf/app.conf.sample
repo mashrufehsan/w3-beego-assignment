@@ -1,0 +1,4 @@
+appname = w3-beego-assignment
+httpport = 8080
+runmode = dev
+CatAPIKey = "abcdefghijklmn0pqrstuvwxyz0123456789"
