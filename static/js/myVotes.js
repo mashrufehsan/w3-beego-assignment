@@ -18,24 +18,42 @@ document.addEventListener("DOMContentLoaded", function() {
         const container = document.querySelector('.myvotes-container');
         container.innerHTML = ''; // Clear existing content
 
-        votes.forEach(vote => {
-            const voteItem = document.createElement('div');
-            voteItem.classList.add('vote-item');
+        if (votes.length === 0) {
+            showNoVotesMessage();
+        } else {
+            // Clear any previous "no votes" message
+            const noVotesMessage = document.querySelector('.no-votes');
+            if (noVotesMessage) {
+                noVotesMessage.remove();
+            }
 
-            const img = document.createElement('img');
-            img.src = vote.image.url;
-            img.alt = 'Image';
-            img.classList.add('vote-image');
+            votes.forEach(vote => {
+                const voteItem = document.createElement('div');
+                voteItem.classList.add('vote-item');
 
-            const voteStatus = document.createElement('div');
-            voteStatus.classList.add('vote-status');
-            voteStatus.textContent = vote.value === 1 ? '👍' : '👎';
+                const img = document.createElement('img');
+                img.src = vote.image.url;
+                img.alt = 'Image';
+                img.classList.add('vote-image');
 
-            voteItem.appendChild(img);
-            voteItem.appendChild(voteStatus);
+                const voteStatus = document.createElement('div');
+                voteStatus.classList.add('vote-status');
+                voteStatus.textContent = vote.value === 1 ? '👍' : '👎';
 
-            container.appendChild(voteItem);
-        });
+                voteItem.appendChild(img);
+                voteItem.appendChild(voteStatus);
+
+                container.appendChild(voteItem);
+            });
+        }
+    }
+
+    // Function to show a "no votes" message
+    function showNoVotesMessage() {
+        let messageDiv = document.createElement('div');
+        messageDiv.className = 'no-votes';
+        messageDiv.textContent = "You haven't voted anything yet";
+        document.querySelector('.myvotes-container').appendChild(messageDiv);
     }
 
     // Fetch votes when the page loads

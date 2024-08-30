@@ -18,46 +18,56 @@ document.addEventListener("DOMContentLoaded", function () {
         const container = document.querySelector('.favs-container');
         container.innerHTML = ''; // Clear existing content
 
-        favorites.forEach(favorite => {
-            const favItem = document.createElement('div');
-            favItem.classList.add('fav-item');
+        if (favorites.length === 0) {
+            showNoFavoritesMessage();
+        } else {
+            // Clear any previous "no favorites" message
+            const noFavoritesMessage = document.querySelector('.no-favorites');
+            if (noFavoritesMessage) {
+                noFavoritesMessage.remove();
+            }
 
-            const img = document.createElement('img');
-            img.src = favorite.image.url;
-            img.alt = 'Favorite Image';
-            img.classList.add('fav-image');
+            favorites.forEach(favorite => {
+                const favItem = document.createElement('div');
+                favItem.classList.add('fav-item');
 
-            const heartIcon = document.createElement('div');
-            heartIcon.classList.add('fav-icon');
+                const img = document.createElement('img');
+                img.src = favorite.image.url;
+                img.alt = 'Favorite Image';
+                img.classList.add('fav-image');
 
-            const heartEmoji = document.createElement('span');
-            heartEmoji.textContent = '💔'; // Heart emoji
-            heartEmoji.title = 'Remove from Favorites'; // Tooltip text
-            heartIcon.appendChild(heartEmoji);
+                const heartIcon = document.createElement('div');
+                heartIcon.classList.add('fav-icon');
 
-            // Attach event listener to heart emoji
-            heartIcon.addEventListener('click', async () => {
-                try {
-                    const response = await fetch(`/deleteAFavourite/${favorite.id}`, { // Correct endpoint with ID
-                        method: 'DELETE',
-                    });
+                const heartEmoji = document.createElement('span');
+                heartEmoji.textContent = '💔'; // Heart emoji
+                heartEmoji.title = 'Remove from Favorites'; // Tooltip text
+                heartIcon.appendChild(heartEmoji);
 
-                    if (response.ok) {
-                        showMessage('Removed from favorites');
-                        fetchFavorites(); // Refresh the list after deletion
-                    } else {
-                        console.error('Error removing favorite:', response.statusText);
+                // Attach event listener to heart emoji
+                heartIcon.addEventListener('click', async () => {
+                    try {
+                        const response = await fetch(`/deleteAFavourite/${favorite.id}`, { // Correct endpoint with ID
+                            method: 'DELETE',
+                        });
+
+                        if (response.ok) {
+                            showMessage('Removed from favorites');
+                            fetchFavorites(); // Refresh the list after deletion
+                        } else {
+                            console.error('Error removing favorite:', response.statusText);
+                        }
+                    } catch (error) {
+                        console.error('Error during delete request:', error);
                     }
-                } catch (error) {
-                    console.error('Error during delete request:', error);
-                }
+                });
+
+                favItem.appendChild(img);
+                favItem.appendChild(heartIcon);
+
+                container.appendChild(favItem);
             });
-
-            favItem.appendChild(img);
-            favItem.appendChild(heartIcon);
-
-            container.appendChild(favItem);
-        });
+        }
     }
 
     // Function to show a temporary message
@@ -75,6 +85,14 @@ document.addEventListener("DOMContentLoaded", function () {
                 messageDiv.parentNode.removeChild(messageDiv);
             }
         }, 2000); // Remove the message after 2 seconds
+    }
+
+    // Function to show a "no favorites" message
+    function showNoFavoritesMessage() {
+        let messageDiv = document.createElement('div');
+        messageDiv.className = 'no-favorites';
+        messageDiv.textContent = "You haven't added anything to favorites yet";
+        document.querySelector('.favs-container').appendChild(messageDiv);
     }
 
     // Fetch favorites when the page loads
