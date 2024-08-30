@@ -47,8 +47,7 @@ function attachEventListeners() {
     const heartIcon = document.querySelector('.heart-icon');
     heartIcon.addEventListener('click', () => {
         postRequest('/createAFavourite', {
-            image_id: currentImageId,
-            sub_id: 'mashruf'
+            image_id: currentImageId
         }, 'Added to favorites');
     });
 
@@ -56,7 +55,6 @@ function attachEventListeners() {
     thumbsUpIcon.addEventListener('click', () => {
         postRequest('/vote', {
             image_id: currentImageId,
-            sub_id: 'mashruf',
             value: 1
         }, 'Up voted!');
     });
@@ -65,7 +63,6 @@ function attachEventListeners() {
     thumbsDownIcon.addEventListener('click', () => {
         postRequest('/vote', {
             image_id: currentImageId,
-            sub_id: 'mashruf',
             value: -1
         }, 'Down voted!');
     });

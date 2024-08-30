@@ -24,9 +24,10 @@ func (c *VoteController) URLMapping() {
 func (c *VoteController) GetVotes() {
 	// Read the API key from the Beego configuration
 	apiKey := beego.AppConfig.String("CatAPIKey")
+	subID := beego.AppConfig.String("SubID")
 
 	// Construct the API URL
-	apiURL := fmt.Sprintf("https://api.thecatapi.com/v1/votes?sub_id=mashruf&order=DESC&api_key=%s", apiKey)
+	apiURL := fmt.Sprintf("https://api.thecatapi.com/v1/votes?sub_id=%s&order=DESC&api_key=%s", subID, apiKey)
 
 	// Create channels for results and errors
 	resultChan := make(chan interface{})
@@ -57,7 +58,6 @@ func (c *VoteController) GetVotes() {
 }
 
 func (c *VoteController) Vote() {
-	// Read the request body
 	body, err := io.ReadAll(c.Ctx.Request.Body)
 	if err != nil {
 		c.Ctx.Output.SetStatus(http.StatusBadRequest)
@@ -66,21 +66,21 @@ func (c *VoteController) Vote() {
 		return
 	}
 
-	// Unmarshal the JSON body
 	var requestBody map[string]interface{}
 	if err := json.Unmarshal(body, &requestBody); err != nil {
-		fmt.Println("Error unmarshalling request body:", err)
 		c.Ctx.Output.SetStatus(http.StatusBadRequest)
 		c.Data["json"] = map[string]string{"error": "Invalid request body"}
 		c.ServeJSON()
 		return
 	}
 
-	// Read the API key from the Beego configuration
 	apiKey := beego.AppConfig.String("CatAPIKey")
-	apiURL := fmt.Sprintf("https://api.thecatapi.com/v1/votes?sub_id=mashruf&api_key=%s", apiKey)
+	subID := beego.AppConfig.String("SubID")
+	apiURL := fmt.Sprintf("https://api.thecatapi.com/v1/votes?sub_id=%s&api_key=%s", subID, apiKey)
 
-	// Marshal the request body to send to the external API
+	// Add sub_id to requestBody
+	requestBody["sub_id"] = subID
+
 	body, err = json.Marshal(requestBody)
 	if err != nil {
 		c.Ctx.Output.SetStatus(http.StatusInternalServerError)
@@ -89,17 +89,13 @@ func (c *VoteController) Vote() {
 		return
 	}
 
-	// Create channels for results and errors
 	resultChan := make(chan interface{})
 	errChan := make(chan error)
 
-	// Start the API call in a separate goroutine
 	go PostData(apiURL, body, resultChan, errChan)
 
-	// Handle results and errors with a timeout
 	select {
 	case result := <-resultChan:
-		// Use type switch to handle different result types
 		switch res := result.(type) {
 		case map[string]interface{}:
 			c.Data["json"] = res

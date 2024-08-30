@@ -49,6 +49,7 @@ This project is a web application that displays cat images and information, util
         httpport  = Port to run the application
         runmode   = Mode to run the application (e.g., dev, prod)
         CatAPIKey = Your Cat API Key
+        SubID = An ID to identify a user (e.g., mashruf, shanto)
         ```
 3. **Install dependencies:**
     ```bash
